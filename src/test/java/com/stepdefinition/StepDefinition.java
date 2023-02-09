@@ -7,17 +7,22 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import pagefactory.FlipkartPage;
 
 public class StepDefinition {
 
 
 	WebDriver driver;
-
-
+@BeforeTest
 	@Given("Navigate to Flipkart page")
 	public void navigate_to_flipkart_page() {
 		
@@ -28,12 +33,16 @@ public class StepDefinition {
 		driver.manage().window().maximize();
 		
 		driver.get("https://www.flipkart.com/");
+		
+		PageFactory.initElements(driver, FlipkartPage.class);
 	}
+
 
 	@When("Close login popup")
 	public void close_login_popup() {
 	    
-        WebElement close = driver.findElement(By.xpath("//button[@class=\"_2KpZ6l _2doB4z\"]"));
+        
+        WebElement close = FlipkartPage.close;
 		
 		close.click();
 		
@@ -43,8 +52,9 @@ public class StepDefinition {
 	public void click_any_banner() throws Throwable {
 
 		Thread.sleep(3000);
+				
+		FlipkartPage.banner.click();
 		
-		driver.findElement(By.xpath("//div[@class=\"_3ChZRr _1rs5Pv\"]")).click();
 	}
 
 	@When("Mouse hover on Electronics Tab")
@@ -53,8 +63,8 @@ public class StepDefinition {
         Actions actions = new Actions(driver);
 		
 		Thread.sleep(5000);
-		
-		WebElement mouse = driver.findElement(By.xpath("//span[contains(text(),'Electronics')]"));
+				
+		WebElement mouse = FlipkartPage.ElectronicsTab;
 		
 		actions.moveToElement(mouse).perform();
 		
@@ -65,18 +75,19 @@ public class StepDefinition {
 	@Then("Print all Mobile brand under Mobiles Tab")
 	public void print_all_Mobile_brand_under_Mobiles() {
 		
-		// find all the sub-menu items and store them in a List
+		// find all the sub-menu items and store them in a List	
 		
-		  List<WebElement> m = driver.findElements(By.xpath("//div[@id=\"container\"]/div/div[2]/div/div/div/div[1]/a"));
+		  List<WebElement> m = FlipkartPage.MobilesTab;
 
 	    // iterate through the List and print each sub-menu item with a number before it, starting from 1
 	    
 		  for(int i = 1; i< m.size(); i++) {
 		         //obtain text
 		         String s = m.get(i).getText();
-		         System.out.println(i +". " + s);		  
-		  
+		         System.out.println(i +". " + s);		   
 	      }
+		  
+		  driver.quit();
 
 	    
 	}

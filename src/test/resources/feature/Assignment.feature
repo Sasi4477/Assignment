@@ -1,3 +1,4 @@
+@test
 Feature: Validate flipkart details
 
 Scenario: Print all mobile brands
