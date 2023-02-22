@@ -22,6 +22,8 @@ public class StepDefinition {
 
 
 	WebDriver driver;
+    FlipkartPage flipkartPage;
+
 @BeforeTest
 	@Given("Navigate to Flipkart page")
 	public void navigate_to_flipkart_page() {
@@ -34,7 +36,7 @@ public class StepDefinition {
 		
 		driver.get("https://www.flipkart.com/");
 		
-		PageFactory.initElements(driver, FlipkartPage.class);
+		flipkartPage = PageFactory.initElements(driver, FlipkartPage.class);
 	}
 
 
@@ -42,7 +44,7 @@ public class StepDefinition {
 	public void close_login_popup() {
 	    
         
-        WebElement close = FlipkartPage.close;
+        WebElement close = flipkartPage.getClose();
 		
 		close.click();
 		
@@ -53,7 +55,7 @@ public class StepDefinition {
 
 		Thread.sleep(3000);
 				
-		FlipkartPage.banner.click();
+		flipkartPage.getBanner().click();
 		
 	}
 
@@ -64,7 +66,7 @@ public class StepDefinition {
 		
 		Thread.sleep(5000);
 				
-		WebElement mouse = FlipkartPage.ElectronicsTab;
+		WebElement mouse = flipkartPage.getElectronicsTab();
 		
 		actions.moveToElement(mouse).perform();
 		
@@ -77,7 +79,7 @@ public class StepDefinition {
 		
 		// find all the sub-menu items and store them in a List	
 		
-		  List<WebElement> m = FlipkartPage.MobilesTab;
+		  List<WebElement> m = flipkartPage.getMobilesTab();
 
 	    // iterate through the List and print each sub-menu item with a number before it, starting from 1
 	    
